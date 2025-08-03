@@ -41,3 +41,31 @@ CLAUDE.md
 .bmad-creator-tools
 test-project-install/*
 sample-project/*
+
+# Autonomous operation files
+infrastructure/audit.log
+infrastructure/backups/
+infrastructure/autonomous-workflow.sh
+infrastructure/autonomous-commit.sh
+infrastructure/automation-config.yaml
+
+# BMAD specific
+dist/
+*.tgz
+*.tar.gz
+
+# Expansion packs build artifacts
+expansion-packs/*/dist/
+expansion-packs/*/build/
+
+# Tools build artifacts
+tools/*/dist/
+tools/*/build/
+
+# Vocia specific
+vocia/.next/
+vocia/out/
+vocia/build/
+vocia/.env.local
+vocia/.env.production.local
+vocia/.env.development.local
