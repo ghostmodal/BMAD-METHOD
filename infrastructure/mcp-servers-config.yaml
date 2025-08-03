@@ -1,0 +1,87 @@
+# MCP Servers Configuration for Nexus Development Ecosystem
+# This file configures all core MCP servers for automation
+
+mcpServers:
+  # Core Infrastructure MCP Servers
+  
+  docker:
+    command: docker
+    args: ["run", "--rm", "-i", "-v", "/var/run/docker.sock:/var/run/docker.sock", "mcp/docker"]
+    env:
+      DOCKER_HOST: "unix:///var/run/docker.sock"
+    description: "Docker container management and orchestration"
+    
+  github:
+    command: docker
+    args: ["run", "--rm", "-i", "mcp/github-mcp-server"]
+    env:
+      GITHUB_TOKEN: "${GITHUB_TOKEN}"
+      GITHUB_API_URL: "https://api.github.com"
+    description: "GitHub repository management and operations"
+    
+  playwright:
+    command: docker
+    args: ["run", "--rm", "-i", "--shm-size=2g", "mcp/playwright"]
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright"
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "0"
+    description: "Browser automation and testing"
+    
+  mongodb:
+    command: docker
+    args: ["run", "--rm", "-i", "mcp/mongodb"]
+    env:
+      MONGODB_URI: "${MONGODB_ATLAS_URI}"
+      MONGODB_DATABASE: "nexus_development_ecosystem"
+    description: "MongoDB database operations"
+    
+  filesystem:
+    command: docker
+    args: ["run", "--rm", "-i", "-v", "${WORKSPACE_PATH}:/workspace", "mcp/filesystem"]
+    env:
+      ALLOWED_PATHS: "/workspace"
+      READ_ONLY: "false"
+    description: "Local filesystem access and operations"
+    
+  stripe:
+    command: docker
+    args: ["run", "--rm", "-i", "mcp/stripe"]
+    env:
+      STRIPE_API_KEY: "${STRIPE_SECRET_KEY}"
+      STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET}"
+    description: "Stripe payment processing and billing"
+
+# Environment Variables Template
+# Copy this section to your .env file and fill in the values
+
+environment_variables:
+  # GitHub Configuration
+  GITHUB_TOKEN: "your_github_personal_access_token_here"
+  
+  # MongoDB Atlas Configuration
+  MONGODB_ATLAS_URI: "mongodb+srv://username:password@cluster.mongodb.net/nexus_development_ecosystem?retryWrites=true&w=majority"
+  
+  # Stripe Configuration
+  STRIPE_SECRET_KEY: "sk_test_your_stripe_secret_key_here"
+  STRIPE_WEBHOOK_SECRET: "whsec_your_webhook_secret_here"
+  
+  # Workspace Configuration
+  WORKSPACE_PATH: "C:/Users/level/OneDrive/Documents/GitHub/nexus-development-ecosystem"
+
+# MCP Server Status
+server_status:
+  docker: "✅ Downloaded and configured"
+  github: "✅ Downloaded and configured"
+  playwright: "✅ Downloaded and configured"
+  mongodb: "✅ Downloaded and configured"
+  filesystem: "✅ Downloaded and configured"
+  stripe: "✅ Downloaded and configured"
+
+# Next Steps
+next_steps:
+  1: "Set up environment variables in .env file"
+  2: "Configure GitHub personal access token"
+  3: "Set up MongoDB Atlas cluster and connection string"
+  4: "Configure Stripe API keys"
+  5: "Test MCP server connections"
+  6: "Proceed to Phase 2: Development Environment" 
